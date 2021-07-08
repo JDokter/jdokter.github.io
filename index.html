@@ -1,19 +1,31 @@
 <!DOCTYPE html>
 <html>
 
-<body>
-<h1>Hello World</h1>
-<p>I'm hosted with GitHub Pages. With great difficulty.</p>
+<body onload="getQOTD()">
+<h1>Hallo! De quote van de dag is: </h1>
 
-<p id="demo"></p>
+
+
+<p id="QOTD"></p>
+
+<button onclick="getRandomQuote()">Willekeurige quote </button>
+
+<p id="RandQ"></p>
 
 <script>
-document.getElementById("demo").innerHTML = 5 + 6;
+
+function getQOTD() {
+	var outputText = "Quote of the day";
+	document.getElementById('QOTD').innerHTML = outputText;
+}
+
+function getRandomQuote() {
+	var outputText = "Random quote";
+	document.getElementById('RandQ').innerHTML = outputText;
+}
+
 </script>
 
-
 </body>
-
-
 
 </html>
