@@ -1,20 +1,16 @@
 <!DOCTYPE html>
 <html>
 
-<head>  
-<script type = "text/javascript">  
-functionmyfunction() {   
-alert("how are you");  
-         }  
-</script>  
-</head>  
-
 <body>
 <h1>Hello World</h1>
 <p>I'm hosted with GitHub Pages. With great difficulty.</p>
 
-<p>Click the following button to see the function in action</p>  
-<input type = "button" onclick = "myfunction()" value = "Display">
+<p id="demo"></p>
+
+<script>
+document.getElementById("demo").innerHTML = 5 + 6;
+</script>
+
 
 </body>
 
