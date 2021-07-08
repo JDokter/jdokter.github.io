@@ -21,8 +21,8 @@
 function fetchJSON(){
 fetch("https://jdokter.github.io/data.json")
 .then(function (response) { return response.json();})
-.then(function (json) {
-	quotes = json;
+.then(function (data) {
+	var quotes = data;
 })
 }
 
