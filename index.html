@@ -19,8 +19,10 @@
 <script>
 
 fetch("data.json")
-  .then(response => response.json())
-  .then(json => console.log(json));
+.then(function (response) { return response.json();})
+.this(function (json) {
+	quotes = json;
+})
 
 function getQOTD() {
 	var outputText = "Quote of the day";
@@ -29,7 +31,7 @@ function getQOTD() {
 
 function getRandomQuote() {
 	var outputText = "Random quote";
-	document.getElementById('RandQ').innerHTML = outputText;
+	document.getElementById('RandQ').innerHTML = quotes.age;
 }
 
 function getJSONFile() {
