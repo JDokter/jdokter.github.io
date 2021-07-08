@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html>
 
-<head>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-</head>
 <body>
 
 <body onload="getQOTD()">
@@ -21,9 +18,9 @@
 
 <script>
 
-$.getJSON('./data.json', function(data) {
-	document.getElementById('Test').innerHTML = data.Name;
-}
+fetch("data.json")
+  .then(response => response.json())
+  .then(json => console.log(json));
 
 function getQOTD() {
 	var outputText = "Quote of the day";
