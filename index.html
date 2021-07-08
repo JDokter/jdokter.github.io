@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html>
 
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+<body>
+
 <body onload="getQOTD()">
 <h1>Hallo! De quote van de dag is: </h1>
 
@@ -12,9 +17,13 @@
 
 <p id="RandQ"></p>
 
+<p id="Test"></p>
+
 <script>
 
-//fetch("./data.json")
+$.getJSON('./data.json', function(data) {
+	document.getElementById('Test').innerHTML = data.Name;
+}
 
 function getQOTD() {
 	var outputText = "Quote of the day";
