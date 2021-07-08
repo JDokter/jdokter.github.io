@@ -3,7 +3,7 @@
 
 <body>
 
-<body onload="getQOTD()">
+<body onload="onloadCalls()">
 <h1>Hallo! De quote van de dag is: </h1>
 
 
@@ -18,11 +18,13 @@
 
 <script>
 
+function fetchJSON(){
 fetch("data.json")
 .then(function (response) { return response.json();})
 .this(function (json) {
 	quotes = json;
 })
+}
 
 function getQOTD() {
 	var outputText = "Quote of the day";
@@ -38,6 +40,11 @@ function getJSONFile() {
 	let text = localStorage.getItem("data");
 	let obj = JSON.parse(text);
 	
+}
+
+function onloadCalls(){
+	fetchJSON();
+	getQOTD();
 }
 
 </script>
