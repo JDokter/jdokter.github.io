@@ -19,12 +19,23 @@
 <script>
 
 var Quotes;
-
+/*
 function fetchJSON(){
 fetch("https://jdokter.github.io/data.json")
-.then(function (response) { return response.json();})
-.then(function (data) {return data;});
+	.then(function (response) { return response.json();})
+	.then(function (data) {return data;});
 }
+*/
+
+fetch('https://jdokter.github.io/data.json')
+.then(response => {
+	console.log(response);
+	return response.json();
+	})
+	.then(response => {
+	console.log(response);
+	});
+
 
 function getQOTD() {
 	var outputText = "Quote of the day";
