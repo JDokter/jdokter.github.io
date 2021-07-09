@@ -18,13 +18,16 @@
 
 <script>
 
+var Globalobj2;
+
 async function getQuotesJSON() {
 	const response = await fetch('https://jdokter.github.io/data.json');
-	const data = await response.json();
-	document.getElementById('Test').innerHTML = data.Name;
+	const obj = await response.json();
+	Globalobj2 = obj;
+	console.log(obj);
+	console.log(obj[0].Name);
+	return obj;
 }
-
-
 
 function getQOTD() {
 	var outputText = "Quote of the day";
@@ -37,8 +40,12 @@ function getRandomQuote() {
 }
 
 function onloadCalls(){
-	getQuotesJSON();
+	var Globalobj = getQuotesJSON();
 	getQOTD();
+	
+	console.log(await Globalobj);
+	console.log(Globalobj[0].Name);
+	console.log("Hi!")
 }
 
 </script>
