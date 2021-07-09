@@ -17,6 +17,7 @@
 <p id="Test"></p>
 
 <script>
+Components.utils.import("resource://gre/modules/Console.jsm");
 
 async function getQuotesJSON() {
 	const response = await fetch('https://jdokter.github.io/data.json');
