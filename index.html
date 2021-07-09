@@ -21,7 +21,7 @@
 var Globalobj2;
 
 async function getQuotesJSON() {
-	const response = await fetch('https://jdokter.github.io/data.json');
+	const response = await fetch('./data.json');
 	const obj = await response.json();
 	Globalobj2 = obj;
 	console.log(obj);
@@ -43,7 +43,7 @@ function onloadCalls(){
 	var Globalobj = getQuotesJSON();
 	getQOTD();
 	
-	console.log(await Globalobj);
+	console.log(Globalobj);
 	console.log(Globalobj[0].Name);
 	console.log("Hi!")
 }
