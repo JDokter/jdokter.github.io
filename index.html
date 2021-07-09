@@ -18,12 +18,12 @@
 
 <script>
 
+var Quotes;
+
 function fetchJSON(){
 fetch("https://jdokter.github.io/data.json")
 .then(function (response) { return response.json();})
-.then(function (data) {
-	var quotes = data;
-})
+.then(function (data) {return data;});
 }
 
 function getQOTD() {
@@ -43,7 +43,7 @@ function getJSONFile() {
 }
 
 function onloadCalls(){
-	fetchJSON();
+	Quotes = fetchJSON();
 	getQOTD();
 }
 
