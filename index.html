@@ -4,7 +4,7 @@
 <body>
 
 <body onload="onloadCalls()">
-<h1>Hallo! De quote van de dag is: V5 </h1>
+<h1>Hallo! De quote van de dag is: V6 </h1>
 
 
 
@@ -22,14 +22,14 @@ async function getQuotesJSON() {
 	const response = await fetch('https://jdokter.github.io/data.json');
 	const data = await response.json();
 	console.log(data);
-	return data;
+	document.getElementById('Test').innerHTML = data.Name;
 }
 
 
 
 function getQOTD() {
 	var outputText = "Quote of the day";
-	document.getElementById('QOTD').innerHTML = QuotesJSON.Name;
+	document.getElementById('QOTD').innerHTML = outputText;
 }
 
 function getRandomQuote() {
@@ -38,7 +38,7 @@ function getRandomQuote() {
 }
 
 function onloadCalls(){
-	var QuotesJSON = getQuotesJSON();
+	getQuotesJSON();
 	getQOTD();
 }
 
