@@ -18,22 +18,18 @@
 
 <script>
 
-var Quotes;
-
-console.log("Say hi!");
-
 async function getQuotesJSON() {
 	const response = await fetch('https://jdokter.github.io/data.json');
 	const data = await response.json();
 	console.log(data);
+	return data;
 }
 
-getQuotesJSON();
 
 
 function getQOTD() {
 	var outputText = "Quote of the day";
-	document.getElementById('QOTD').innerHTML = outputText;
+	document.getElementById('QOTD').innerHTML = QuotesJSON.Name;
 }
 
 function getRandomQuote() {
@@ -42,6 +38,7 @@ function getRandomQuote() {
 }
 
 function onloadCalls(){
+	var QuotesJSON = getQuotesJSON();
 	getQOTD();
 }
 
