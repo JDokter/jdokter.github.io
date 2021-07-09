@@ -21,9 +21,7 @@
 async function getQuotesJSON() {
 	const response = await fetch('https://jdokter.github.io/data.json');
 	const data = await response.json();
-	const Quotes = JSON.parse(data);
-	console.log(Quotes.Name);
-	document.getElementById('Test').innerHTML = Quotes.Name;
+	document.getElementById('Test').innerHTML = data.Name;
 }
 
 
