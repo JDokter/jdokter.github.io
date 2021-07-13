@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+
+<body onload="onloadCalls()">
+<h1>Hallo! De quote van de dag is: V6 </h1>
+
+
+
+<p>Quote:</p> <p id="QOTD"></p>
+<p>Datum:</p> <p id="QOTD_Date"></p>
+<p>Door:</p> <p id="QOTD_Writer"></p>
+
+<button onclick="onclickCalls()">Willekeurige quote </button>
+
+<p>Quote:</p> <p id="RandQ"></p>
+<p>Datum:</p> <p id="RandQ_Date"></p>
+<p>Door:</p> <p id="RandQ_Writer"></p>
+
+<script>
+
+var JSONLoaded = false;
+
+function getQuotesJSON(obj) {
+	var Object = obj;
+	JSONLoaded = true;
+
+}
+
+// Fetch the data from the JSON
+async function fetchQuotesJSON() {
+	const response = await fetch('./Quotes.json');
+	const obj = await response.json();
+	return obj;
+}
+
+async function updateQuotesJSON(Object) {
+	JSONLoaded = false;
+	const response = await fetch('./Quotes.json',{method: 'POST',body: JSON.stringify(Object)});
+	const content = await response.json();
+	
+	console.log(content);
+	
+	// Method to update the JSON file
+}
+
+// Populates the list of Shown and not shown indices
+function populateIndices(Quote_Obj) {
+	for (let i = 0; i < Quote_Obj.ListOfQuotes.length; i++){
+		if (Quote_Obj.ListOfQuotes[i].Shown){
+			Quote_Obj.ShownIndices.push(i);
+			
+		var ind = Quote_Obj.UnshownIndices.indexOf(i);
+			if (ind > -1){
+				Quote_Obj.UnshownIndices.splice(ind,1);
+			}
+		} else {
+			Quote_Obj.UnshownIndices.push(i);
+			
+		var ind = Quote_Obj.ShownIndices.indexOf(i);
+			if (ind > -1){
+				Quote_Obj.ShownIndices.splice(ind,1);
+			}
+		}
+	}
+	console.log(Quote_Obj);
+}
+
+// Set the Quote of the Day
+function setQOTD(Quote_Obj) {
+
+	
+
+	document.getElementById('QOTD').innerHTML = Quote_Obj.ListOfQuotes[0].Quote;
+	document.getElementById('QOTD_Date').innerHTML = Quote_Obj.ListOfQuotes[0].Writer;
+	document.getElementById('QOTD_Writer').innerHTML = Quote_Obj.ListOfQuotes[0].Date;
+	
+	Object.Shown = true;
+	
+}
+
+function setRandomQuote(Quote_Obj) {
+	
+	var i = 2;
+	
+	document.getElementById('RandQ').innerHTML = Quote_Obj.ListOfQuotes[i].Quote;
+	document.getElementById('RandQ_Date').innerHTML = Quote_Obj.ListOfQuotes[i].Writer;
+	document.getElementById('RandQ_Writer').innerHTML = Quote_Obj.ListOfQuotes[i].Date;
+}
+
+function onloadCalls(){
+		
+	fetchQuotesJSON()
+	.then(JSONPromise => { return JSONPromise;})
+	.then(JSON => { setQOTD(JSON); populateIndices(JSON); })
+	.catch(error => {console.log(error);});
+
+}
+
+function onclickCalls() {
+	fetchQuotesJSON()
+	.then(JSONPromise => { return JSONPromise;})
+	.then(JSON => { setRandomQuote(JSON); })
+	.catch(error => {console.log(error);});
+}
+
+//console.log(Object);
+
+</script>
+
+</body>
+
+</html>

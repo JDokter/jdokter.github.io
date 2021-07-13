@@ -1,52 +1,168 @@
 <!DOCTYPE html>
 <html>
+<head>
+<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+<style>
+h1 {text-align: center;}
+p {text-align: center;}
+div {text-align: center;}
+
+.quoteformat {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    -moz-transform: translateX(-50%) translateY(-40%);
+    -webkit-transform: translateX(-50%) translateY(-40%);
+    transform: translateX(-50%) translateY(-40%);
+	width: 90%;
+	font-size: 16px;
+}
+
+.writerformat {
+    position: absolute;
+    top: 80%;
+    left: 25%;
+    -moz-transform: translateX(-25%) translateY(-80%);
+    -webkit-transform: translateX(-25%) translateY(-80%);
+    transform: translateX(-25%) translateY(-80%);
+}
+
+.dateformat {
+    position: absolute;
+    top: 80%;
+    left: 75%;
+    -moz-transform: translateX(-75%) translateY(-80%);
+    -webkit-transform: translateX(-75%) translateY(-80%);
+    transform: translateX(-75%) translateY(-80%);
+}
+
+.buttonformat{
+    position: absolute;
+    top: 90%;
+    left: 50%;
+    -moz-transform: translateX(-50%) translateY(-90%);
+    -webkit-transform: translateX(-50%) translateY(-90%);
+    transform: translateX(-50%) translateY(-90%);
+}
+body{  
+	background-image: url('./background.jpg');
+	background-repeat: no-repeat;
+	   width: 100%;
+       height: 200px;
+	     background-size: cover;
+}
+
+</style>
+</head>
 
 <body>
 
+
 <body onload="onloadCalls()">
-<h1>Hallo! De quote van de dag is: V6 </h1>
 
+<div>
+<div class="quoteformat">
+	<i id="QOTD"></i>
+</div>
 
+<div class="dateformat">
+	<p id="QOTD_Date"></p>
+</div>
 
-<p id="QOTD"></p>
+<div class="writerformat">
+	<p id="QOTD_Writer"></p>
+</div>
 
-<button onclick="getRandomQuote()">Willekeurige quote </button>
-
-<p id="RandQ"></p>
-
-<p id="Test"></p>
+<div class="buttonformat">
+	<button onclick="onclickCalls()">Willekeurige quote </button>
+</div>
+</div>
 
 <script>
 
-var Globalobj2;
+var JSONLoaded = false;
+const url = './Quotes.json';
+var NotShownInd = [];
 
-async function getQuotesJSON() {
-	const response = await fetch('./data.json');
+function getQuotesJSON(obj) {
+	var Object = obj;
+	JSONLoaded = true;
+
+}
+
+// Fetch the data from the JSON
+async function fetchQuotesJSON() {
+	const response = await fetch('./Quotes.json');
 	const obj = await response.json();
-	Globalobj2 = obj;
-	console.log(obj);
-	console.log(obj[0].Name);
 	return obj;
 }
 
-function getQOTD() {
-	var outputText = "Quote of the day";
-	document.getElementById('QOTD').innerHTML = outputText;
+function randomNumber() {
+	return Math.floor(Math.random()*(NotShownInd.length + 1));
 }
 
-function getRandomQuote() {
-	var outputText = "Random quote";
-	document.getElementById('RandQ').innerHTML = outputText;
+// Populates the list of not shown indices
+function populateIndices(Quote_Obj) {
+    //console.log(Quote_Obj.ListOfQuotes.length);
+	for (let i = 0; i < Quote_Obj.ListOfQuotes.length; i++)
+	{
+		NotShownInd.push(i);
+	}
+	//console.log(NotShownInd);
+}
+
+// Remove given index from the list of not shown indices
+function updateIndices(index, Quote_Obj) {
+	var ind = NotShownInd.indexOf(index);
+	if (ind > -1){
+		NotShownInd.splice(ind,1);
+	}
+	// Reset
+	if (NotShownInd.length < 1){
+		populateIndices(Quote_Obj);
+	}
+	//console.log(NotShownInd);
+}
+
+// Set the Quote of the Day
+function setQOTD(Quote_Obj) {
+
+	var i = randomNumber();
+	updateIndices(i,Quote_Obj);
+
+	document.getElementById('QOTD').innerHTML = Quote_Obj.ListOfQuotes[i].Quote;
+	document.getElementById('QOTD_Date').innerHTML = Quote_Obj.ListOfQuotes[i].Date;
+	document.getElementById('QOTD_Writer').innerHTML = Quote_Obj.ListOfQuotes[i].Writer;
+	
+}
+
+function setRandomQuote(Quote_Obj) {
+	
+	var i = randomNumber();
+	updateIndices(i,Quote_Obj);
+	
+	document.getElementById('QOTD').innerHTML = Quote_Obj.ListOfQuotes[i].Quote;
+	document.getElementById('QOTD_Date').innerHTML = Quote_Obj.ListOfQuotes[i].Date;
+	document.getElementById('QOTD_Writer').innerHTML = Quote_Obj.ListOfQuotes[i].Writer;
 }
 
 function onloadCalls(){
-	var Globalobj = getQuotesJSON();
-	getQOTD();
-	
-	console.log(Globalobj);
-	console.log(Globalobj[0].Name);
-	console.log("Hi!")
+		
+	fetchQuotesJSON()
+	.then(JSONPromise => { return JSONPromise;})
+	.then(JSON => { populateIndices(JSON); setQOTD(JSON); })
+	.catch(error => {console.log(error);});
+	//console.log(NotShownInd);
 }
+
+function onclickCalls() {
+	fetchQuotesJSON()
+	.then(JSONPromise => { return JSONPromise;})
+	.then(JSON => { setRandomQuote(JSON); })
+	.catch(error => {console.log(error);});
+}
+
+//console.log(Object);
 
 </script>
 
